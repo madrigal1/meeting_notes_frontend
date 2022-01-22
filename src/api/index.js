@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API = axios.create({ baseURL: 'http://localhost:3000/v1' });
+const API = axios.create({ baseURL: 'https://meeting-notes-gokul.herokuapp.com/v1' });
 
 API.interceptors.request.use((req) => {
     const profile = JSON.parse(localStorage.getItem('profile'));
