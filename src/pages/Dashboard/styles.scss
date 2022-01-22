@@ -1,3 +1,6 @@
+@import "../../breakpoints.scss";
+
+
 .dashboard {
     background: 
     linear-gradient(
@@ -27,6 +30,10 @@
     // section,article,div {
     //    // border :1px solid black;
     // }
+    @include media("<=tablet") {
+        display: flex;
+        flex-direction: column;
+    }
     .header {
         grid-area: Header;
         background-color: white;

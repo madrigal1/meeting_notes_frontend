@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Routes, Route } from "react-router-dom";
 
-import Login from './pages/Login';
+import Login from './pages/Login/Login';
 import Dashboard from './pages/Dashboard/Dashboard';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
@@ -14,8 +14,8 @@ const App = () => {
         <LocalizationProvider dateAdapter={AdapterDateFns}>
             <div className="App">
                 <Routes>
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/" element={<Dashboard />} />
+                    <Route path="/" element={<Login />} />
+                    <Route path="/home" element={<Dashboard />} />
                 </Routes>
             </div>
         </LocalizationProvider>

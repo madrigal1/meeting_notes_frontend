@@ -64,10 +64,13 @@ const Dashboard = () => {
     }
     useEffect(() => {
         async function fetchData() {
-            const { data: { data: { tokens, user } } } = await logIn();
-            let userInfo = { tokens, user };
-            setUser(user);
-            localStorage.setItem(`profile`, JSON.stringify({ token: tokens.accessToken, user }));
+            const userCache = localStorage.getItem("profile");
+            if (!userCache) {
+                console.log("no user cache")
+                alert("Error login first")
+                return;
+            };
+            setUser(JSON.parse(userCache));
             //console.log(`accessToken: ${tokens.accessToken}`)
             const am = await fetchAllMeetings();
             let allm = am?.data?.data?.allMeetings;

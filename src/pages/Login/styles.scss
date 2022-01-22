@@ -1,0 +1,28 @@
+.login {
+    width:100vw;
+    min-height: 100vh;
+    height:auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: 
+        linear-gradient(
+            rgba(0,0,0,0.6),
+            rgba(0,0,0,0.6),
+        ),
+        url("../../assets//pattern.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    &__loginContainer {
+        background-color:white;
+        padding:1em;
+        border-radius: 8px;
+        .submit {
+            background: #023A72;
+            color:white;
+            padding:0.8em;
+            text-align: center;
+            border-radius: 100px;
+        }
+    }
+}
