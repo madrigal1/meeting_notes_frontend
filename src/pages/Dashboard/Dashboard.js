@@ -21,7 +21,7 @@ const Dashboard = () => {
     const [isEdit, setIsEdit] = useState(-1);
 
     const handleSubmit = async () => {
-        createMeeting({ title: meetingTitle, desc: meetingDesc, start_time: startTime, end_time: endTime, initiator: user.email });
+        await createMeeting({ title: meetingTitle, desc: meetingDesc, start_time: startTime, end_time: endTime, initiator: user.email });
         window.location.reload();
     }
     const handleDelete = async (meeting_id) => {
