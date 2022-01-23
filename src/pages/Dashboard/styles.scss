@@ -46,6 +46,15 @@
         font-size: 1.5em;
         letter-spacing: 1px;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        .logout {
+            position: absolute;
+            right:100px;
+            background-color: red;
+            padding:1em 3em;
+            border-radius: 10%;
+            color:white;
+            font-size: 0.6rem;
+        }
     }
     .meeting {
         grid-area: meetings;
@@ -55,6 +64,9 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            h1 {
+                color:white;
+            }
         }
         &__container {
             width:100%;

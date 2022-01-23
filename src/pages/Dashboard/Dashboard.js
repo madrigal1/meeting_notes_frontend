@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 
 import "./styles.scss";
 
 
 import TextField from '@mui/material/TextField';
 import CircularProgress from '@mui/material/CircularProgress';
-
+import Button from '@mui/material/Button';
 import DateTimePicker from '@mui/lab/DateTimePicker';
-import { createMeeting, deleteMeeting, editMeeting, fetchAllMeetings, logIn } from '../../api';
+import { createMeeting, deleteMeeting, editMeeting, fetchAllMeetings, fetchAllMeetingsByUser, logIn } from '../../api';
 import Meeting from './Meeting/Meeting';
 
 const Dashboard = () => {
@@ -19,10 +21,13 @@ const Dashboard = () => {
 
     const [allMeetings, setAllMeetings] = useState([]);
     const [isEdit, setIsEdit] = useState(-1);
+    const [noMeetings, setNoMeeting] = useState(false);
 
+    const naviagte = useNavigate();
     const handleSubmit = async () => {
+        console.log({ user });
         await createMeeting({ title: meetingTitle, desc: meetingDesc, start_time: startTime, end_time: endTime, initiator: user.email });
-        window.location.reload();
+        //window.location.reload();
     }
     const handleDelete = async (meeting_id) => {
         console.log(`meeting delted ${meeting_id}`);
@@ -39,6 +44,11 @@ const Dashboard = () => {
         const idx = allMeetings.findIndex((mArr) => mArr._id === meeting._id);
         console.log({ idx });
         setIsEdit(allMeetings.findIndex((mArr) => mArr._id === meeting._id));
+    }
+
+    const handleLogout = async () => {
+        localStorage.removeItem("profile");
+        naviagte("/");
     }
     const handleEditSubmit = async () => {
         if (isEdit === -1)
@@ -65,31 +75,52 @@ const Dashboard = () => {
     useEffect(() => {
         async function fetchData() {
             const userCache = localStorage.getItem("profile");
+            console.log(userCache);
             if (!userCache) {
                 console.log("no user cache")
                 alert("Error login first")
                 return;
             };
-            setUser(JSON.parse(userCache));
+            const { user } = JSON.parse(userCache);
+            console.log({ user });
+            setUser(user);
             //console.log(`accessToken: ${tokens.accessToken}`)
-            const am = await fetchAllMeetings();
-            let allm = am?.data?.data?.allMeetings;
-            setAllMeetings(allm);
         }
         fetchData()
     }, [])
+
+    useEffect(() => {
+        if (!user?._id)
+            return;
+        async function setMeeting() {
+            console.log(user._id);
+            const am = await fetchAllMeetingsByUser(user._id);
+            let allm = am?.data?.data?.allMeetings;
+            setAllMeetings(allm);
+        }
+        setMeeting()
+            .catch(err => setNoMeeting(true));
+    }, [user])
 
     useEffect(() => {
         //console.log({ allMeetings });
     }, [allMeetings])
     return (
         <article className="dashboard">
-            <header className="header"><h1>MeetingNotes.UI</h1></header>
+            <header className="header">
+                <h1>MeetingNotes.UI</h1>
+                <Button onClick={handleLogout} className="logout" variant="contained">Logout</Button>
+            </header>
             <section className="meeting">
                 {
                     allMeetings.length == 0 ? (
                         <div className="progressContainer">
-                            <CircularProgress />
+                            {
+                                noMeetings ?
+                                    (
+                                        <h1>No Meetings on Schedule ...</h1>
+                                    ) : <CircularProgress />
+                            }
                         </div>
                     ) : (
                         <div className="meeting__container">

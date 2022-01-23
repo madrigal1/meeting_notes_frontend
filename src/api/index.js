@@ -13,6 +13,7 @@ API.interceptors.request.use((req) => {
 
 
 export const fetchAllMeetings = () => (API.get(`/meeting/fetch/all`));
+export const fetchAllMeetingsByUser = (id) => (API.get(`/meeting/fetch/${id}`));
 export const deleteMeeting = (id) => (API.delete(`/meeting/delete/${id}`));
 export const editMeeting = (meeting) => (API.put(`/meeting/update`, meeting));
 export const createMeeting = (meeting) => (API.post(`/meeting/new`, meeting));

@@ -80,14 +80,14 @@ const Login = () => {
                 <TextField value={email} onChange={(e) => setEmail(e.target.value)} className="input_ele" id="email" label="Input your email" variant="standard" /> <br />
                 <TextField value={pwd} onChange={(e) => setPwd(e.target.value)} className="input_ele" id="pwd" label="Input your password" variant="standard" />
                 <br />
-                <TabPanel value={value} index={0}>
-                    <div className="submit" onClick={async () => await handleLogin()}>Login</div>
+                <TabPanel value={value} index={0} onClick={async () => await handleLogin()} >
+                    <div className="submit">Login</div>
                 </TabPanel>
-                <TabPanel value={value} index={1}>
-                    <div className="submit" onClick={async () => await handleRegister()}>Register</div>
+                <TabPanel value={value} index={1} onClick={async () => await handleRegister()}>
+                    <div className="submit" >Register</div>
                 </TabPanel>
             </section>
-        </article>
+        </article >
     );
 };
 
