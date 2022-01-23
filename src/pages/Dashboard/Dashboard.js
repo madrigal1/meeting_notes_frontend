@@ -100,7 +100,7 @@ const Dashboard = () => {
         }
         setMeeting()
             .catch(err => setNoMeeting(true));
-    }, [user])
+    })
 
     useEffect(() => {
         //console.log({ allMeetings });
