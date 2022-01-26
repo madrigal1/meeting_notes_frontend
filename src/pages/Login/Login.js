@@ -4,7 +4,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import { TextField } from '@mui/material';
+import { CircularProgress, TextField } from '@mui/material';
 import { logIn, register } from '../../api';
 import { useNavigate } from 'react-router-dom';
 
@@ -42,6 +42,7 @@ const Login = () => {
     const [value, setValue] = useState(0);
     const [email, setEmail] = useState("");
     const [pwd, setPwd] = useState("");
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -49,9 +50,10 @@ const Login = () => {
 
     const handleLogin = async () => {
         try {
+            setLoading(true);
             const { data: { data: { tokens, user } } } = await logIn({ email, pwd });
             localStorage.setItem(`profile`, JSON.stringify({ token: tokens.accessToken, user }));
-            navigate("/home");
+            setTimeout(() => navigate("/home"), 500)
         } catch (err) {
             alert("Sign in failed");
             console.log(err);
@@ -59,9 +61,10 @@ const Login = () => {
     }
     const handleRegister = async () => {
         try {
+            setLoading(true);
             const { data: { data: { tokens, user } } } = await register({ email, pwd });
             localStorage.setItem(`profile`, JSON.stringify({ token: tokens.accessToken, user }));
-            navigate("/home");
+            setTimeout(() => navigate("/home"), 500)
         } catch (err) {
             alert("Registration failed");
             console.log(err);
@@ -80,11 +83,11 @@ const Login = () => {
                 <TextField value={email} onChange={(e) => setEmail(e.target.value)} className="input_ele" id="email" label="Input your email" variant="standard" /> <br />
                 <TextField value={pwd} onChange={(e) => setPwd(e.target.value)} className="input_ele" id="pwd" label="Input your password" variant="standard" />
                 <br />
-                <TabPanel value={value} index={0} onClick={async () => await handleLogin()} >
-                    <div className="submit">Login</div>
+                <TabPanel className={loading ? "submitBtn" : ""} value={value} index={0} onClick={async () => await handleLogin()} >
+                    {loading ? <CircularProgress /> : <div className="submit">Login</div>}
                 </TabPanel>
-                <TabPanel value={value} index={1} onClick={async () => await handleRegister()}>
-                    <div className="submit" >Register</div>
+                <TabPanel className={loading ? "submitBtn" : ""} value={value} index={1} onClick={async () => await handleRegister()}>
+                    {loading ? <CircularProgress /> : <div className="submit" >Register</div>}
                 </TabPanel>
             </section>
         </article >

@@ -9,14 +9,17 @@ import LocalizationProvider from '@mui/lab/LocalizationProvider';
 
 import "./App.scss";
 
+
 const App = () => {
-    const isLoggedIn = () => (localStorage.getItem("profile"));
+    const isLoggedIn = () => (localStorage.getItem("profile") !== null);
+
+    console.log(isLoggedIn());
     return (
         <LocalizationProvider dateAdapter={AdapterDateFns}>
             <div className="App">
                 <Routes>
                     <Route path="/" element={<Login />} />
-                    <Route path="/home" element={isLoggedIn ? <Navigate to="/" /> : <Dashboard />} />
+                    <Route path="/home" element={isLoggedIn() ? <Dashboard /> : <Navigate to="/" />} />
                 </Routes>
             </div>
         </LocalizationProvider>
