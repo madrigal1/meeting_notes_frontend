@@ -52,11 +52,12 @@ const Login = () => {
         try {
             setLoading(true);
             const { data: { data: { tokens, user } } } = await logIn({ email, pwd });
-            localStorage.setItem(`profile`, JSON.stringify({ token: tokens.accessToken, user }));
-            setTimeout(() => navigate("/home"), 500)
+            await localStorage.setItem(`profile`, JSON.stringify({ token: tokens.accessToken, user }));
+            await navigate("/home", 500);
         } catch (err) {
             alert("Sign in failed");
             console.log(err);
+            setLoading(false);
         }
     }
     const handleRegister = async () => {
@@ -68,6 +69,7 @@ const Login = () => {
         } catch (err) {
             alert("Registration failed");
             console.log(err);
+            setLoading(false);
         }
     }
 

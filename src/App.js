@@ -11,15 +11,13 @@ import "./App.scss";
 
 
 const App = () => {
-    const isLoggedIn = () => (localStorage.getItem("profile") !== null);
 
-    console.log(isLoggedIn());
     return (
         <LocalizationProvider dateAdapter={AdapterDateFns}>
             <div className="App">
                 <Routes>
                     <Route path="/" element={<Login />} />
-                    <Route path="/home" element={isLoggedIn() ? <Dashboard /> : <Navigate to="/" />} />
+                    <Route path="/home" element={<Dashboard />} />
                 </Routes>
             </div>
         </LocalizationProvider>
