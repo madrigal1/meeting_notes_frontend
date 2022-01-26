@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 
 import Login from './pages/Login/Login';
 import Dashboard from './pages/Dashboard/Dashboard';
@@ -10,12 +10,13 @@ import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import "./App.scss";
 
 const App = () => {
+    const isLoggedIn = () => (localStorage.getItem("profile"));
     return (
         <LocalizationProvider dateAdapter={AdapterDateFns}>
             <div className="App">
                 <Routes>
                     <Route path="/" element={<Login />} />
-                    <Route path="/home" element={<Dashboard />} />
+                    <Route path="/home" element={isLoggedIn ? <Navigate to="/" /> : <Dashboard />} />
                 </Routes>
             </div>
         </LocalizationProvider>
